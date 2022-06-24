@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>jQuery PopupWindow - Gaspare Sganga</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="The ultimate popup/dialog/modal jQuery plugin">
+        <meta name="author" content="Gaspare Sganga">
+
+        <link rel="stylesheet" type="text/css"  href="src/popupwindow.css">
+           <style>
+            .example_content {
+                display: none;
+                }
+           </style>
+    </head> 
+    <body>
+        <button id="quick_demo_button">Try jQuery PopupWindow!</button>
+        <div id=example1 class=example_content>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris rutrum tortor lacus, non dictum nulla feugiat sed. Nam molestie diam id nisi fringilla placerat. Fusce aliquet, tellus non vehicula scelerisque, sem orci luctus nunc, non gravida ipsum elit id massa. Phasellus eu vulputate nisl. Curabitur et posuere nisl, vel gravida elit. Donec at tristique orci. Phasellus et orci ac turpis pharetra finibus quis eget risus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec volutpat eros sit amet elit commodo, in molestie felis dignissim. Vestibulum lobortis justo magna, ut dictum tortor porta eget. Ut rutrum placerat eros, non ultricies arcu convallis in. Ut imperdiet tortor nec sem suscipit commodo. Phasellus ac leo in risus ullamcorper hendrerit.</div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+        <script src="src/popupwindow.js" type="text/javascript"></script>
+        
+        <script>
+
+
+
+            $("#quick_demo_button").on("click", function(event){
+                if ($("#example1").PopupWindow("getState")) $("#example1").PopupWindow("destroy");
+                $("#example1").PopupWindow({
+                    title   : "Example 1 - Complete playground",
+                    modal   : true,
+                    autoOpen:true,
+                    // .....
+                    // .....
+                });
+
+                //$("#example1").PopupWindow("open");
+            });
+
+            $("#example1").on("onclose.popupwindow", function(event, data){
+                console.log(event);
+                console.log(data);
+                //event.preventDefault();
+            })
+
+        </script>
+    </body>
+</html>

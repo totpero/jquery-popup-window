@@ -32,7 +32,7 @@ PopupWindow - The ultimate popup/dialog/modal jQuery plugin
         }, 
         
         draggable           : true,
-        nativeDrag          : true,
+        nativeDrag          : false,
         dragOpacity         : 0.6,
         
         resizable           : true,
@@ -634,10 +634,14 @@ PopupWindow - The ultimate popup/dialog/modal jQuery plugin
     }
     function _Close(popupWindow){
         if (!_CheckPopupWindow(popupWindow) || !popupWindow.data("opened")) return;
-        if (popupWindow.data("minimized")) _Unminimize(popupWindow);
-        popupWindow.data("overlay").hide();
-        popupWindow.data("opened", false);
-        _TriggerEvent(popupWindow, "close");
+        
+        var event = _TriggerEvent(popupWindow, "onclose");
+        if(!event.isDefaultPrevented()) {
+            if (popupWindow.data("minimized")) _Unminimize(popupWindow);
+            popupWindow.data("overlay").hide();
+            popupWindow.data("opened", false);
+            _TriggerEvent(popupWindow, "close");
+        }
     }
     
     function _Maximize(popupWindow){
@@ -1044,7 +1048,10 @@ PopupWindow - The ultimate popup/dialog/modal jQuery plugin
         var eventData;
         if (eventName == "move")    eventData = _GetCurrentPosition(popupWindow);
         if (eventName == "resize")  eventData = _GetCurrentSize(popupWindow);
-        popupWindow.data("originalTarget").trigger(eventName + ".popupwindow", eventData);
+        jQueryEvent = $.Event(eventName + ".popupwindow", eventData);
+        popupWindow.data("originalTarget").trigger(jQueryEvent);
+        return jQueryEvent;
+        // return popupWindow.data("originalTarget").trigger(eventName + ".popupwindow", eventData);
     }
     
     function _SetMinimizedArea(){
